@@ -16,7 +16,7 @@ module ActiveAdmin
       end
 
       def search_method
-        method.to_s.match(metasearch_conditions) ? method : "#{method}_eq"
+        method.to_s.match(search_conditions) ? method : "#{method}_eq"
       end
 
       def checked?
@@ -31,10 +31,11 @@ module ActiveAdmin
         { :name => "q[#{search_method}]" }
       end
 
-      def metasearch_conditions
-        /true|false|present|blank|null|not_null/
+      def search_conditions
+        /true|false|present|blank|null|not|null/
       end
 
     end
   end
 end
+
