@@ -16,9 +16,9 @@ describe ActiveAdmin::ResourceController::DataAccess do
   describe "searching" do
     let(:params){ {:q => {} }}
 
-    it "should call the metasearch method" do
+    it "should call the search method" do
       chain = mock("ChainObj")
-      chain.should_receive(:metasearch).with(params[:q]).once.and_return(Post.search)
+      chain.should_receive(:search).with(params[:q]).once.and_return(Post.search)
       controller.send :apply_filtering, chain
     end
 
