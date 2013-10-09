@@ -13,9 +13,9 @@ module ActiveAdmin
         if searchable_has_many_through?
           "#{reflection.through_reflection.name}_#{reflection.foreign_key}"
         else
-          name = method.to_s
-          name.concat '_id' if reflection
-          name
+          polymorphic = reflection && reflection.macro == :belongs_to && reflection.options[:polymorphic]
+          key = polymorphic ? nil : reflection.try(:association_primary_key)
+          name = [method, key].compact.join('_')
         end
       end
 
