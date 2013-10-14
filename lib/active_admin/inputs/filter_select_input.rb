@@ -15,14 +15,8 @@ module ActiveAdmin
         # If the relationship is a HMT, we set the search logic to be something
         # like :#{through_association}_#{end_association_id}.
         if through_association?
-          reflection_chain = []
-          r = reflection
-          while r.through_reflection
-            reflection_chain << r.through_reflection.name
-            r = r.through_reflection
-          end
-          reflection_chain.reverse! << reflection.source_reflection.foreign_key
-          name = reflection_chain.join('_')
+          chain = reflection.chain.slice(1..-1).reverse.map(&:name) << reflection.foreign_key
+          name = chain.join('_')
         else
           name = method.to_s
           name.concat '_id' if reflection
