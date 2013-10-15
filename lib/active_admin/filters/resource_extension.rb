@@ -9,8 +9,6 @@ module ActiveAdmin
 
     module ResourceExtension
 
-      MAX_RANSACKABLE_ASSOCIATION_CHAIN_LENGTH = 2
-
       def initialize(*)
         super
         add_filters_sidebar_section
@@ -103,8 +101,9 @@ module ActiveAdmin
         if resource_class.respond_to?(:reflect_on_all_associations)
           poly, not_poly = resource_class.reflect_on_all_associations.partition{ |r| r.macro == :belongs_to && r.options[:polymorphic] }
 
-          # throw out filter chains that are too long
-          too_long, not_poly = not_poly.partition { |r| r.chain.length > MAX_RANSACKABLE_ASSOCIATION_CHAIN_LENGTH }
+          # remove associations nested more than twice
+          not_poly.reject!{ |r| r.chain.length > 2 }
+
           filters        = poly.map(&:foreign_type) + not_poly.map(&:name)
           filters.map &:to_sym
         else
