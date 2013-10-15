@@ -11,6 +11,10 @@ module ActiveAdmin
       def input_name
         return method if seems_searchable?
 
+        searchable_method_name.concat multiple? ? '_in' : '_eq'
+      end
+
+      def searchable_method_name
         # Deal with has_many :through relationships in filters
         # If the relationship is a HMT, we set the search logic to be something
         # like :#{through_association}_#{end_association_id}.
@@ -21,7 +25,7 @@ module ActiveAdmin
           name = method.to_s
           name.concat '_id' if reflection
         end
-        name.concat multiple? ? '_in' : '_eq'
+        name
       end
 
       # Provide the AA translation to the blank input field.
