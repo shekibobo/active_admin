@@ -104,7 +104,7 @@ module ActiveAdmin
           # remove associations nested more than twice
           not_poly.reject!{ |r| r.chain.length > 2 }
 
-          filters        = poly.map(&:foreign_type) + not_poly.map(&:name)
+          filters = poly.map(&:foreign_type) + not_poly.map(&:name)
           filters.map &:to_sym
         else
           []
