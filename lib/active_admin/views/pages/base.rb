@@ -23,6 +23,7 @@ module ActiveAdmin
         def build_active_admin_head
           within @head do
             insert_tag Arbre::HTML::Title, [title, render_or_call_method_or_proc_on(self, active_admin_application.site_title)].join(" | ")
+            meta :http_equiv => "X-UA-Compatible", :content => "IE=edge"
             active_admin_application.stylesheets.each do |style, options|
               text_node stylesheet_link_tag(style, options).html_safe
             end
@@ -30,11 +31,11 @@ module ActiveAdmin
             active_admin_application.javascripts.each do |path|
               text_node(javascript_include_tag(path))
             end
-            
+
             if active_admin_application.favicon
               text_node(favicon_link_tag(active_admin_application.favicon))
             end
-            
+
             text_node csrf_meta_tag
           end
         end
