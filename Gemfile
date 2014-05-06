@@ -51,5 +51,6 @@ group :test do
   gem 'shoulda-matchers'
   gem 'sqlite3'
   gem 'fuubar'
+  gem 'fuubar-cucumber'
 end
 
