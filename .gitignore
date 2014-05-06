@@ -41,6 +41,5 @@ capybara*
 viewcumber
 test-rails*
 public
-.rspec
 .rails-version
 .rbenv-version
